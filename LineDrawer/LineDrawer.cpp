@@ -22,26 +22,17 @@ void SFML_Visual_Drawer()
     sf::Vector2f pointE(200, 100);
     sf::Vector2f pointF(250, 150);
     
-    // Vector to store points on the curve
-    std::vector<sf::Vertex> curvePoints;
 
     // Generate points on the curve
     // Number of points on the curve
     int numPoints = 100; // Number of points on the curve
     float time = 0.0f;
-    float deltaTime = 0.1f / numPoints;
+    float deltaTime = 0.4f / numPoints;
     bool forward = true;
-
-    // Generate points on the curve
-    for (int i = 0; i <= numPoints; ++i)
-    {
-        float ti = static_cast<float>(i) / numPoints;
-        sf::Vector2f point = CubicBezierCurve(pointA, pointB, pointC, pointD, ti);
-        curvePoints.push_back(sf::Vertex(point, sf::Color::White));
-    }
     
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Project Line Drawer");
 
+    std::vector<sf::Vector2f> curvePoints;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -78,8 +69,24 @@ void SFML_Visual_Drawer()
 
         //Calculate and Visualize Cubic Bezier Curve
         sf::Vector2f point = CubicBezierCurve(pointA, pointB, pointC, pointD, time);
-        VisualizedCubicBezierCurve(window, pointA, pointB, pointC, pointD, time);
+        auto newPoint = VisualizedCubicBezierCurve(window, pointA, pointB, pointC, pointD, time);
+        
+        for (int i = 0; i < curvePoints.size(); ++i)
+        {
+            if (curvePoints[i] == newPoint)
+            {
+                curvePoints.erase(curvePoints.begin() + i);
+                break; // Assuming you want to delete only the first matching point
+            }
+        }
 
+        curvePoints.emplace_back(newPoint);
+
+        for (const auto& point : curvePoints)
+        {
+            drawPoint(window, point, 5, sf::Color::Red);
+        }
+        
         drawLineBressenham(window, pointE, pointF);
 
         
