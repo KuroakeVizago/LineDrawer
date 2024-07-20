@@ -52,10 +52,10 @@ inline void drawLineBressenham(int x0, int y0, int x1, int y1) {
 inline void drawLineBressenham(
     sf::RenderWindow& window,
     const sf::Vector2f& a,
-    const sf::Vector2f& b) {
+    const sf::Vector2f& b, const sf::Color& color, const float& thickness) {
 
     sf::Vector2f currentPosition(a);
-    drawPoint(window, currentPosition, 5,sf::Color::Red);
+    drawPoint(window, currentPosition, thickness * 2,sf::Color::Red);
     
     int distanceX = abs(b.x - a.x);
     int distanceY = abs(b.y - a.y);
@@ -79,7 +79,7 @@ inline void drawLineBressenham(
             currentPosition.y += stepY;
         }
 
-        drawPoint(window, currentPosition, 1.0f, sf::Color::Green);
+        drawPoint(window, currentPosition, thickness, color);
 
     }
     

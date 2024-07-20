@@ -16,8 +16,8 @@ void SFML_Visual_Drawer()
     // Define control points
     sf::Vector2f pointA(600, 500);
     sf::Vector2f pointB(800, 200);
-    sf::Vector2f pointC(1000, 700);
-    sf::Vector2f pointD(1500, 400);
+    sf::Vector2f pointC(1000, 500);
+    sf::Vector2f pointD(1200, 200);
 
     sf::Vector2f pointE(200, 100);
     sf::Vector2f pointF(250, 150);
@@ -33,6 +33,7 @@ void SFML_Visual_Drawer()
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Project Line Drawer");
 
     std::vector<sf::Vector2f> curvePoints;
+
 
     while (window.isOpen()) {
         sf::Event event;
@@ -87,8 +88,9 @@ void SFML_Visual_Drawer()
             drawPoint(window, point, 5, sf::Color::Red);
         }
         
-        drawLineBressenham(window, pointE, pointF);
+        drawLineBressenham(window, pointE, pointF, sf::Color::Green, 3);
 
+        bresenhamCircle(window, 250, 350, 100);
         
         window.display();
     }
@@ -96,16 +98,10 @@ void SFML_Visual_Drawer()
 
 int main()
 {
-    std::string input;
-    std::cin >> input;
-    
     std::cout << "DDA:" << std::endl;
     drawLineDDA(0,0,5,10);
     std::cout << "Bressenham:" << std::endl;
     drawLineBressenham(0, 0, 5, 10);
 
-    if (input == "Visualizer")
-    {
-        SFML_Visual_Drawer();   
-    }
+    SFML_Visual_Drawer();   
 }
