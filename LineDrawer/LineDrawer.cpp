@@ -3,6 +3,9 @@
 #include "src/BezierCurve.hpp"
 #include "src/DrawAlgorithm.hpp"
 
+int startX, startY, targetX, targetY, circleRadius;
+
+
 void SFML_Visual_Drawer()
 {
     int xc = 250; // Koordinat x pusat lingkaran
@@ -19,8 +22,9 @@ void SFML_Visual_Drawer()
     sf::Vector2f pointC(1000, 500);
     sf::Vector2f pointD(1200, 200);
 
-    sf::Vector2f pointE(200, 100);
-    sf::Vector2f pointF(250, 150);
+    //Bressenham Points
+    sf::Vector2f pointE(startX, startY);
+    sf::Vector2f pointF(targetX, targetY);
     
 
     // Generate points on the curve
@@ -90,7 +94,7 @@ void SFML_Visual_Drawer()
         
         drawLineBressenham(window, pointE, pointF, sf::Color::Green, 3);
 
-        bresenhamCircle(window, 250, 350, 100);
+        bresenhamCircle(window, 250, 350, circleRadius);
         
         window.display();
     }
@@ -98,10 +102,22 @@ void SFML_Visual_Drawer()
 
 int main()
 {
+    std::cout << "Start X:";
+    std::cin >> startX;
+    std::cout << "Start Y:";
+    std::cin >> startY;
+    std::cout << "Finish X:";
+    std::cin >> targetX;
+    std::cout << "Finish Y:";
+    std::cin >> targetY;
+
+    std::cout << "Circle Radius:";
+    std::cin >> circleRadius;
+    
     std::cout << "DDA:" << std::endl;
-    drawLineDDA(0,0,5,10);
+    drawLineDDA(startX,startY,targetX,targetY);
     std::cout << "Bressenham:" << std::endl;
-    drawLineBressenham(0, 0, 5, 10);
+    drawLineBressenham(startX, startY, targetX, targetY);
 
     SFML_Visual_Drawer();   
 }
